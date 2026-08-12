@@ -36,7 +36,16 @@
         <ProjectReference Include="..\..\submodules\btcpayserver\BTCPayServer\BTCPayServer.csproj" />
     </ItemGroup>
     <ItemGroup>
-      <PackageReference Include="NNostr.Client" Version="0.0.54" />
+      <!-- TEMP for local nip44 development: swap back to
+           <PackageReference Include="NNostr.Client" Version="0.0.55" /> (or whatever
+           version Kukks releases with nip44 NWC support) before opening the plugin PR.
+           Properties/Private/ExcludeAssets override this csproj's ProjectReference
+           defaults: pin the inner TFM (multitarget negotiation is bypassed by the
+           Properties metadata default) and copy the DLL into the plugin output. -->
+      <ProjectReference Include="..\..\..\..\NNostr\NNostr.Client\NNostr.Client.csproj"
+                        Properties="TargetFramework=net8.0;StaticWebAssetsEnabled=false"
+                        Private="true"
+                        ExcludeAssets="" />
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Resources" />
